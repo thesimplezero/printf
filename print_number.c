@@ -1,5 +1,6 @@
-include <stdarg.h>
+#include <stdarg.h>
 #include "main.h"
+
 /**
 * parser - Receives the main string and all the necessary parameters to
 *          print a formatted string.
