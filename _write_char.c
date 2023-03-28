@@ -9,5 +9,4 @@
 int _write_char(char c)
 {
 return (write(STDOUT_FILENO, &c, 1));
-} 
-
+}

@@ -1,53 +1,56 @@
-include <stdarg.h>
 #include "main.h"
-/**
-* parser - Receives the main string and all the necessary parameters to
-*          print a formatted string.
-*
-* @format: A string containing all the desired characters.
-* @f_list: A list of all the possible functions.
-* @arg_list: A list containing all the arguments passed to the program.
-*
-* Return: A total count of the characters printed.
-*/
-int parser(const char *format, conver_t f_list[], va_list arg_list)
-{
-size_t i, j, printed_chars = 0;
-int r_val;
 
-for (i = 0; format[i] != '\0'; i++)
+/**
+* print_number - prints a number send to this function
+* @args: List of arguments
+* Return: The number of arguments printed
+*/
+int print_number(va_list args)
 {
-if (format[i] == '%')
+int n = va_arg(args, int);
+unsigned int num;
+unsigned int div = 1;
+int len = 0;
+
+if (n < 0)
 {
-for (j = 0; f_list[j].sym != NULL; j++)
-{
-if (format[i + 1] == f_list[j].sym[0])
-{
-r_val = f_list[j].f(arg_list);
-if (r_val == -1)
-return (-1);
-printed_chars += r_val;
-break;
-}
-}
-if (f_list[j].sym == NULL && format[i + 1] != ' ')
-{
-if (format[i + 1] != '\0')
-{
-_write_char(format[i]);
-_write_char(format[i + 1]);
-printed_chars += 2;
+len += _write_char('-');
+num = (unsigned int)(-n);
 }
 else
-return (-1);
-}
-i++;
-}
-else
+num = (unsigned int)n;
+
+for (; num / div > 9; div *= 10)
+{}
+
+for (; div != 0; div /= 10)
 {
-_write_char(format[i]);
-printed_chars++;
+len += _write_char('0' + num / div);
+num %= div;
 }
+
+return (len);
 }
-return (printed_chars);
+
+/**
+* print_unsgined_number - Prints an unsigned number
+* @n: unsigned integer to be printed
+* Return: The amount of numbers printed
+*/
+int print_unsgined_number(unsigned int n)
+{
+unsigned int num = n;
+unsigned int div = 1;
+int len = 0;
+
+for (; num / div > 9; div *= 10)
+{}
+
+for (; div != 0; div /= 10)
+{
+len += _write_char('0' + num / div);
+num %= div;
+}
+
+return (len);
 }
